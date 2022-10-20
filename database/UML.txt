@@ -1,0 +1,62 @@
+@startuml
+object Customer
+object Order
+object Product
+object Warehouse
+object OrderedProduct
+object ProductImage
+object WarehouseProduct
+object Admin
+
+Customer : id : int
+Customer : username : string
+Customer : firstname : string
+Customer : lastname : string
+Customer : password_hash : string
+
+Order : id : int
+Order : status : int
+Order : address : string
+Order : postcode : int
+Order : city : string
+Order : phone : string
+
+Product : id : int
+Product : status : int
+Product : name :  string
+Product : description : string
+Product : price : double
+Product : original_price : double
+Product : discount : double
+
+ProductImage : id : int
+ProductImage : product_id : int
+ProductImage : url : string
+
+Warehouse : id : int
+Warehouse : name : string
+
+WarehouseProduct : id : int
+WarehouseProduct : product_id : int
+WarehouseProduct : warehouse_id : int
+WarehouseProduct : quantity : int
+
+OrderedProduct : id : int
+OrderedProduct : order_id : int
+OrderedProduct : name : string
+OrderedProduct : quantity : int
+OrderedProduct : price : double
+OrderedProduct : discount : double
+
+Admin : id : int
+Admin : username : string
+Admin : password_hash : string 
+Admin : access_level : int
+
+Product "1" -- "*" ProductImage
+Warehouse "1" -- "*" WarehouseProduct
+WarehouseProduct "*" -- "1" Product
+Order "1" -- "*" OrderedProduct
+Customer "0" -- "*" Order
+
+@enduml
