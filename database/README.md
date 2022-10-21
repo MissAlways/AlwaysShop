@@ -32,19 +32,19 @@
   |name : string    |   |product_id : int|   |manufacturer : string  |                      
   |quantity : int   |   |name : string   |   |price : double         |                      
   |price : double   |   `----------------'   |weight : double        |                      
-  |discount : double|                        |unit : int             |                      
-  `-----------------'                        |original_price : double|                      
-                                             |discount : double      |                      
-                                             `-----------------------'                      
-                                                                                            
-                                                                                            
-                         ,----------------.    ,----------------.   ,-----------------.     
-                         |ProductAllergy  |    |ProductImage    |   |ProductCategory  |     
-                         |----------------|    |----------------|   |-----------------|     
-                         |id : int        |    |id : int        |   |id : int         |     
-                         |allergy_id : int|    |product_id : int|   |product_id : int |     
-                         |product_id : int|    |url : string    |   |category_id : int|     
-                         `----------------'    `----------------'   `-----------------'     
+  |discount : double|             |          |unit : int             |                      
+  `-----------------'             |       ___|original_price : double|______                      
+                                  |       |  |discount : double      |     |                
+                                  |       |  `-----------------------'     |                
+                                  |       |             |                  |                 
+                                  |       |             |                  |                 
+                         ,----------------.     ,----------------.   ,-----------------.     
+                         |ProductAllergy  |     |ProductImage    |   |ProductCategory  |     
+                         |----------------|     |----------------|   |-----------------|     
+                         |id : int        |     |id : int        |   |id : int         |     
+                         |allergy_id : int|     |product_id : int|   |product_id : int |     
+                         |product_id : int|     |url : string    |   |category_id : int|     
+                         `----------------'     `----------------'   `-----------------'     
                                                                               |             
                                                                       ,-------------.       
                                                                       |Category     |       
