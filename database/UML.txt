@@ -74,6 +74,7 @@ OrderedProduct : name : string
 OrderedProduct : quantity : int
 OrderedProduct : price : double
 OrderedProduct : discount : double
+OrderedProduct : original_price : double
 
 Admin : id : int
 Admin : username : string
