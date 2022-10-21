@@ -24,6 +24,10 @@ Order : address : string
 Order : postcode : int
 Order : city : string
 Order : phone : string
+Order : order_date : date
+Order : payment_confirmation_date : date
+Order : package_sent_date : date
+Order : package_delivered_date : date
 
 Product : id : int
 Product : status : int
