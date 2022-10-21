@@ -9,6 +9,8 @@ object WarehouseProduct
 object Admin
 object ProductCategory
 object Category
+object ProductAllergy
+object Allergy
 
 Customer : id : int
 Customer : username : string
@@ -27,9 +29,21 @@ Product : id : int
 Product : status : int
 Product : name :  string
 Product : description : string
+Product : ingredients : string
+Product : manufacturer : string
 Product : price : double
+Product : weight : double
+Product : unit : int
 Product : original_price : double
 Product : discount : double
+
+Allergy : id : int
+Allergy : product_id : int
+Allergy : name : string
+
+ProductAllergy : id : int
+ProductAllergy : allergy_id : int
+ProductAllergy : product_id : int
 
 ProductCategory : id : int
 ProductCategory : product_id : int
@@ -64,6 +78,8 @@ Admin : access_level : int
 
 Product "1" -- "*" ProductImage
 Product "1" -- "*" ProductCategory
+Product "1" -- "*" ProductAllergy
+Allergy "1" -- "*" ProductAllergy 
 ProductCategory "*" -- "1" Category
 Warehouse "1" -- "*" WarehouseProduct
 WarehouseProduct "*" -- "1" Product
