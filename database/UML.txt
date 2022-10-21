@@ -7,6 +7,8 @@ object OrderedProduct
 object ProductImage
 object WarehouseProduct
 object Admin
+object ProductCategory
+object Category
 
 Customer : id : int
 Customer : username : string
@@ -28,6 +30,13 @@ Product : description : string
 Product : price : double
 Product : original_price : double
 Product : discount : double
+
+ProductCategory : id : int
+ProductCategory : product_id : int
+ProductCategory : category_id : int
+
+Category : id : int
+Category : name : string
 
 ProductImage : id : int
 ProductImage : product_id : int
@@ -54,6 +63,8 @@ Admin : password_hash : string
 Admin : access_level : int
 
 Product "1" -- "*" ProductImage
+Product "1" -- "*" ProductCategory
+ProductCategory "*" -- "1" Category
 Warehouse "1" -- "*" WarehouseProduct
 WarehouseProduct "*" -- "1" Product
 Order "1" -- "*" OrderedProduct
