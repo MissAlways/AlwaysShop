@@ -11,19 +11,26 @@ object ProductCategory
 object Category
 object ProductAllergy
 object Allergy
+object CustomerSession
+object AdminSession
 
 Customer : id : int
-Customer : username : string
-Customer : firstname : string
-Customer : lastname : string
-Customer : password_hash : string
+Customer : username : varchar(255)
+Customer : firstname : varchar(255)
+Customer : lastname : varchar(255)
+Customer : password : varchar(255)
+
+CustomerSession : id : int
+CustomerSession : customer_id : int
+CustomerSession : token : varchar(128)
+CustomerSession : ttl : int
 
 Order : id : int
 Order : status : int
-Order : address : string
+Order : address : varchar(255)
 Order : postcode : int
-Order : city : string
-Order : phone : string
+Order : city : varchar(255)
+Order : phone : varchar(20)
 Order : order_date : date
 Order : payment_confirmation_date : date
 Order : package_sent_date : date
@@ -31,19 +38,18 @@ Order : package_delivered_date : date
 
 Product : id : int
 Product : status : int
-Product : name :  string
-Product : description : string
-Product : ingredients : string
-Product : manufacturer : string
-Product : price : double
-Product : weight : double
+Product : name :  varchar(255)
+Product : description : varchar(10000)
+Product : ingredients : varchar(5000)
+Product : manufacturer : varchar(255)
+Product : price : decimal
+Product : weight : decimal
 Product : unit : int
-Product : original_price : double
-Product : discount : double
+Product : original_price : decimal
+Product : discount : decimal
 
 Allergy : id : int
-Allergy : product_id : int
-Allergy : name : string
+Allergy : name : varchar(255)
 
 ProductAllergy : id : int
 ProductAllergy : allergy_id : int
@@ -54,14 +60,14 @@ ProductCategory : product_id : int
 ProductCategory : category_id : int
 
 Category : id : int
-Category : name : string
+Category : name : varchar(255)
 
 ProductImage : id : int
 ProductImage : product_id : int
-ProductImage : url : string
+ProductImage : url : varchar(400)
 
 Warehouse : id : int
-Warehouse : name : string
+Warehouse : name : varchar(255)
 
 WarehouseProduct : id : int
 WarehouseProduct : product_id : int
@@ -70,16 +76,21 @@ WarehouseProduct : quantity : int
 
 OrderedProduct : id : int
 OrderedProduct : order_id : int
-OrderedProduct : name : string
+OrderedProduct : name : varchar(255)
 OrderedProduct : quantity : int
-OrderedProduct : price : double
-OrderedProduct : discount : double
-OrderedProduct : original_price : double
+OrderedProduct : price : decimal
+OrderedProduct : discount : decimal
+OrderedProduct : original_price : decimal
 
 Admin : id : int
-Admin : username : string
-Admin : password_hash : string 
+Admin : username : varchar(255)
+Admin : password : varchar(255) 
 Admin : access_level : int
+
+AdminSession : id : int
+AdminSession : admin_id : int
+AdminSession : token : varchar(128)
+AdminSession : ttl : int
 
 Product "1" -- "*" ProductImage
 Product "1" -- "*" ProductCategory
@@ -90,5 +101,7 @@ Warehouse "1" -- "*" WarehouseProduct
 WarehouseProduct "*" -- "1" Product
 Order "1" -- "*" OrderedProduct
 Customer "0" -- "*" Order
+Customer "0" -- "*" CustomerSession
+Admin "0" -- "*" AdminSession
 
 @enduml
