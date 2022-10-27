@@ -42,7 +42,6 @@ COLLATE='utf8mb4_general_ci'
 ENGINE=InnoDB
 ;
 
-
 CREATE TABLE `admin` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`username` VARCHAR(255) NOT NULL,
@@ -53,7 +52,6 @@ CREATE TABLE `admin` (
 )
 COLLATE='utf8mb4_general_ci'
 ;
-
 
 CREATE TABLE `warehouse` (
 	`id` INT NOT NULL AUTO_INCREMENT,
@@ -80,7 +78,6 @@ CREATE TABLE `product` (
 COLLATE='utf8mb4_general_ci'
 ENGINE=InnoDB
 ;
-
 
 CREATE TABLE `warehouse_product` (
 	`id` INT NOT NULL AUTO_INCREMENT,
@@ -148,4 +145,28 @@ CREATE TABLE `product_allergy` (
 )
 COLLATE='utf8mb4_general_ci'
 ENGINE=InnoDB
+;
+
+CREATE TABLE `customer_session` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`customer_id` INT(11) NOT NULL,
+	`token` VARCHAR(128) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`ttl` INT(13) NOT NULL,
+	PRIMARY KEY (`id`) USING BTREE,
+	INDEX `FK_customer_session_customer` (`customer_id`) USING BTREE,
+	CONSTRAINT `FK_customer_session_customer` FOREIGN KEY (`customer_id`) REFERENCES `always_shop`.`customer` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+;
+
+CREATE TABLE `admin_session` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`admin_id` INT NOT NULL,
+	`token` VARCHAR(128) NOT NULL,
+	`ttl` INT(13) NOT NULL,
+	PRIMARY KEY (`id`),
+	CONSTRAINT `FK__admin` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+COLLATE='utf8mb4_general_ci'
 ;
