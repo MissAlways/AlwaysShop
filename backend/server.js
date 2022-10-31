@@ -19,7 +19,7 @@ app.get('/products', async (req, res) => {
         );
         return res.status(200).json(result);
     } catch (error) {
-        return res.status(503).json({ message: "Database currently not available. Error: " + error})
+        return res.status(503).json({ message: "Database currently not available. Error: " + error })
     }
 });
 
@@ -32,10 +32,27 @@ app.get("/products/images/:id", async (req, res) => {
             "FROM product_image " +
             "WHERE product_id = ?",
             [id]
-            );
-            return res.status(200).json(result);
-        } catch (error) {
-        return res.status(503).json({ message: "Database currently not available. Error: " + error})
+        );
+        return res.status(200).json(result);
+    } catch (error) {
+        return res.status(503).json({ message: "Database currently not available. Error: " + error })
+    }
+});
+
+// Get product allergies by product id
+app.get("/products/allergies/:id", async (req, res) => {
+    try {
+        let id = parseInt(req.params.id);
+        const result = await db.pool.query(
+            "SELECT name " +
+            "FROM allergy " +
+            "INNER JOIN product_allergy ON product_allergy.allergy_id = allergy.id " +
+            "WHERE product_allergy.product_id = ?",
+            [id]
+        );
+        return res.status(200).json(result);
+    } catch (error) {
+        return res.status(503).json({ message: "Database currently not available. Error: " + error })
     }
 });
 
