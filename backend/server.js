@@ -56,4 +56,21 @@ app.get("/products/allergies/:id", async (req, res) => {
     }
 });
 
+// Get product by category id
+app.get("/products/categories/:id", async (req, res) => {
+    try {
+        let id = parseInt(req.params.id);
+        const result = await db.pool.query(
+            "SELECT product.* " +
+            "FROM product " +
+            "INNER JOIN product_category ON product_category.product_id = product.id " +
+            "WHERE product_category.category_id = ?",
+            [id]
+        );
+        return res.status(200).json(result);
+    } catch (error) {
+        return res.status(503).json({ message: "Database currently not available. Error: " + error })
+    }
+});
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
