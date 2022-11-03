@@ -19,7 +19,7 @@ app.get('/products', async (req, res) => {
         );
         return res.status(200).json(result);
     } catch (error) {
-        return res.status(503).json({ message: "Database currently not available. Error: " + error })
+        return res.status(500).json({ message: "Internal Server Error. Error: " + error })
     }
 });
 
@@ -35,7 +35,7 @@ app.get("/products/images/:id", async (req, res) => {
         );
         return res.status(200).json(result);
     } catch (error) {
-        return res.status(503).json({ message: "Database currently not available. Error: " + error })
+        return res.status(500).json({ message: "Internal Server Error. Error: " + error })
     }
 });
 
@@ -52,7 +52,7 @@ app.get("/products/allergies/:id", async (req, res) => {
         );
         return res.status(200).json(result);
     } catch (error) {
-        return res.status(503).json({ message: "Database currently not available. Error: " + error })
+        return res.status(500).json({ message: "Internal Server Error. Error: " + error })
     }
 });
 
@@ -69,7 +69,40 @@ app.get("/products/categories/:id", async (req, res) => {
         );
         return res.status(200).json(result);
     } catch (error) {
-        return res.status(503).json({ message: "Database currently not available. Error: " + error })
+        return res.status(500).json({ message: "Internal Server Error. Error: " + error })
+    }
+});
+
+// POST
+
+// Add new product
+app.post("/products", async (req, res) => {
+    let product = req.body;
+    let name = product.name;
+    if (!name || name === "") {
+        return res.status(403).json({ message: "Name can not be empty" })
+    }
+    if (!product.hasOwnProperty('status')) {
+        return res.status(403).json({ message: "Status can not be empty" })
+    }
+    let status = parseInt(product.status);
+    let description = product.description ? product.description : null;
+    let ingredients = product.ingredients ? product.ingredients : null;
+    let manufacturer = product.manufacturer ? product.manufacturer : null;
+    let price = product.price ? product.price : null;
+    let original_price = product.original_price ? product.original_price : null;
+    let discount = product.discount ? product.discount : null;
+    let weight = product.weight ? product.weight : null;
+    let unit = product.unit ? product.unit : null;
+
+    try {
+        const result = await db.pool.query(
+            "INSERT INTO product (name, status, description, ingredients, manufacturer, price, original_price, discount, weight, unit)" +
+            "VALUES (?,?,?,?,?,?,?,?,?,?)",
+            [name, status, description, ingredients, manufacturer, price, original_price, discount, weight, unit]);
+        return res.status(201).json({ message: "Success" });
+    } catch (error) {
+        return res.status(500).json({ message: "Internal Server Error. Error: " + error })
     }
 });
 
