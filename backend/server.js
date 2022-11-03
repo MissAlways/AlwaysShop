@@ -144,4 +144,23 @@ app.put("/products/:id", async (req, res) => {
     }
 });
 
+// DELETE
+
+// Delete product by id
+app.delete("/products/:id", async (req, res) => {
+    if (!req.body) {
+        return res.status(400).json({ message: "Bad Request" });
+    }
+    let tempId = parseInt(req.params.id);
+    try {
+        const result = await db.pool.query(
+            "DELETE FROM product " +
+            "WHERE id = ?; ",
+            [tempId]);
+        return res.status(200).json({ message: "Success" });
+    } catch (error) {
+        return res.status(500).json({ message: "Internal Server Error. Error: " + error })
+    }
+});
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
