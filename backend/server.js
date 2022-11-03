@@ -106,4 +106,42 @@ app.post("/products", async (req, res) => {
     }
 });
 
+// PUT
+
+// Edit product by id
+app.put("/products/:id", async (req, res) => {
+    if (!req.body) {
+        return res.status(400).json({ message: "Bad Request" });
+    }
+    let product = req.body;
+    let tempId = parseInt(req.params.id);
+    let name = product.name;
+    if (!name || name === "") {
+        return res.status(403).json({ message: "Name can not be empty" })
+    }
+    if (!product.hasOwnProperty('status')) {
+        return res.status(403).json({ message: "Status can not be empty" })
+    }
+    let status = parseInt(product.status);
+    let description = product.description ? product.description : null;
+    let ingredients = product.ingredients ? product.ingredients : null;
+    let manufacturer = product.manufacturer ? product.manufacturer : null;
+    let price = product.price ? product.price : null;
+    let original_price = product.original_price ? product.original_price : null;
+    let discount = product.discount ? product.discount : null;
+    let weight = product.weight ? product.weight : null;
+    let unit = product.unit ? product.unit : null;
+    
+    try {
+        const result = await db.pool.query(
+            "UPDATE product " +
+            "SET name = ?, status = ?, description = ?, ingredients = ?, manufacturer = ?, price = ?, original_price = ?, discount = ?, weight = ?, unit = ? " +
+            "WHERE id = ?; ",
+            [name, status, description, ingredients, manufacturer, price, original_price, discount, weight, unit, tempId]);
+            return res.status(201).json({ message: "Success" });
+        } catch (error) {
+            return res.status(500).json({ message: "Internal Server Error. Error: " + error })
+    }
+});
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
