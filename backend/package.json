@@ -15,6 +15,7 @@
   "author": "aina",
   "license": "",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
     "mariadb": "^3.0.1"
   }
